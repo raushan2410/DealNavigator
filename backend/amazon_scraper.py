@@ -12,21 +12,10 @@ BASE_HEADERS = {
 
 
 def scrape_amazon(query):
-    results = []
-    product_links = getlinks(query)
-    #save the product links in a file 
-    with open("product_links.txt", "w") as file:
-        for link in product_links:
-            file.write(link + "\n")
+    product_info = getProductInfo(query)
+    return product_info
     
-    for link in product_links:
-        product_data = extract_product_info(link)
-        if product_data:
-            results.append(product_data)
-
-    return results
-    
-def getlinks(query):
+def getProductInfo(query):
     seen_urls = set()
     page_number = 1
     #if query has space replace it with + sign
@@ -37,23 +26,41 @@ def getlinks(query):
         response = requests.get(search_url, headers=BASE_HEADERS)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
-        product_links = []
-        link_count = 0
-        for a_tag in soup.find_all("a", attrs={"class": "a-link-normal s-no-outline"}):
-            full_url = BASE_URL + a_tag['href'] if "https" not in a_tag['href'] else a_tag['href']
-            if full_url not in seen_urls:
-                seen_urls.add(full_url)
-                product_links.append(full_url)
-                link_count += 1
-                if link_count == 10:
-                    break
+        product_count = 0
+        products = soup.find("div", attrs={"class": "s-main-slot s-result-list s-search-results sg-row"})
 
-        #save the product links in a file
-        # with open("product_links.txt", "w") as file:
-        #     for link in product_links:
-        #         file.write(link + "\n")
-        return product_links
+        for product in products.find_all("data-component-type", attrs={"s-search-result"}):
+            price = product.find("span", attrs={"class": "a-price-whole"}).get_text(strip=True) if product.find("span", attrs={"class": "a-price-whole"}) else "N/A"
+            if price == "N/A":
+                continue
+            product_link = product.find("a", attrs={"class": "a-link-normal a-text-normal"}).get('href') if product.find("a", attrs={"class": "a-link-normal a-text-normal"}) else "N/A"
+            if product_link == "N/A":
+                continue
+            product_link = BASE_URL + product_link if not product_link.startswith("https://www.amazon.in") else product_link
+            if product_link in seen_urls:
+                continue
+            seen_urls.add(product_link)
+            product_count += 1
+            if product_count == 15:
+                break
+            rating_count_text = product.find("span", attrs={"class": "a-size-base"}).get_text(strip=True) if product.find("span", attrs={"class": "a-size-base"}) else "N/A"
+            rating_count = ''.join(filter(str.isdigit, rating_count_text)) if rating_count_text != "N/A" else "N/A"
+            rating_count = int(rating_count) if rating_count.isdigit() else 0
 
+            avg_rating_text = product.find("span", attrs={"class": "a-icon-alt"}).get_text(strip=True) if product.find("span", attrs={"class": "a-icon-alt"}) else "N/A"
+            avg_rating = avg_rating_text.split(" ")[0] if avg_rating_text != "N/A" else "N/A"
+            avg_rating = float(avg_rating) if avg_rating.replace(".", "").isdigit() else 0
+
+            product_info = {
+               "price": price,
+                "rating_count": rating_count,
+                "avg_rating": avg_rating,
+                "product_name": product.find("span", attrs={"class": "a-text-normal"}).get_text(strip=True) if product.find("span", attrs={"class": "a-text-normal"}) else "N/A",
+                "image_url": product.find("img", attrs={"class": "s-image"}).get('src') if product.find("img", attrs={"class": "s-image"}) else "N/A",
+                "product_url": product_link,
+                "logo": "https://www.amazon.com/favicon.ico"
+            }
+            return product_info
     except Exception as e:
         print(f"Error fetching product links: {e}")
         return []
