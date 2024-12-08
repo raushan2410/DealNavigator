@@ -12,12 +12,9 @@ BASE_HEADERS = {
 
 def scrape_flipkart(query):
     results = []
-    product_links = getProductInfo(query)
+    product_links = getlinks(query)
     #print size of product links
-    #save the product links in a file 
-    with open("product_links.txt", "a") as file:
-        for link in product_links:
-            file.write(link + "\n")
+    #save the product links in a file
     
     for link in product_links:
         product_data = extract_product_info(link)
@@ -26,7 +23,7 @@ def scrape_flipkart(query):
 
     return results      
 
-def getProductInfo(query):
+def getlinks(query):
     seen_urls = set()
     page_number = 1
     #if query has space replace it with + sign

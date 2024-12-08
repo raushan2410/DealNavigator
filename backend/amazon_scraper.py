@@ -47,8 +47,6 @@ def getProductInfo(query):
             if product_link in seen_urls:
                 continue
             seen_urls.add(product_link)
-            with open("product_links.txt", "a") as file:
-                file.write(product_link + "\n")
                 
             rating_count_text = product.find("span", attrs={"class": "a-size-base"}).get_text(strip=True) if product.find("span", attrs={"class": "a-size-base"}) else "N/A"
             rating_count = ''.join(filter(str.isdigit, rating_count_text)) if rating_count_text != "N/A" else "N/A"
