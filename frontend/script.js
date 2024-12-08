@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const sortedProducts = [...products].sort((a, b) => {
             if (criteria === 'price') {
                 return a[criteria] - b[criteria];
-            } else {
+            } else if (criteria === 'avg_rating' || criteria === 'rating_count') {
                 return b[criteria] - a[criteria];
             }
         });

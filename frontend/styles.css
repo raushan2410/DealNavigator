@@ -7,8 +7,8 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    max-width: 100vw;
-    background-color: #f4f4f9;
+    width: 100vw;
+    background-image: linear-gradient(to right top, #834267, #794771, #6e4b78, #61507d, #54547f, #455780, #37597e, #2a5b7a, #1a5c73, #125c6a, #165b60, #205a56);
 }
 
 h1 {
@@ -17,46 +17,58 @@ h1 {
     color: #333;
 }
 
-.container {
+.main {
     width: 100%;
-    max-width: 600px;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.container {
+    width: 40%;
+    min-width: 600px;
+    position: relative;
+    /* top: 20px; */
+    /* padding: 20px; */
+    margin: 15px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    /* border-radius: 15%; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.container div {
+    padding: 20px;
+}
+
 #search-container {
-    width: 100%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
     font-size: large;
 }
 
 #search-query {
     width: calc(100% - 22px);
     padding: 10px;
-    margin-bottom: 10px;
+    height: 25px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: large;
 }
 
 #search-button {
-    width: 100%;
-    padding: 10px;
+    width: 100px;
+    height: 45px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    margin-bottom: 20px;
 }
 
 #search-button:hover {
@@ -64,21 +76,31 @@ h1 {
 }
 
 #sort-container {
-    width: 100%;
+    width: 20%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
     font-size: large;
 }
 
 #sort-options {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
+    height: 45px;
+    /* padding: 10px; */
+    /* margin-bottom: 20px; */
     border: 1px solid #ccc;
     border-radius: 4px;
     text-align: center;
+    font-size: medium;
+}
+
+#product-list {
+    width: 70%;
+    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 .product {
@@ -128,8 +150,9 @@ h1 {
 .loading {
     text-align: center;
     font-size: 1.5em;
-    color: #007bff;
-    margin-top: 20px;
+    color: #ffffff;
+    position: absolute;
+    top: 45%;
 }
 
 @media (max-width: 600px) {

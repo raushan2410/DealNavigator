@@ -16,8 +16,6 @@ def scrape_amazon(query):
     return product_info
     
 def getProductInfo(query):
-    seen_urls = set()
-    page_number = 1
     #if query has space replace it with + sign
     query = query.replace(" ", "+")
     search_url = f"https://www.amazon.in/s?k={query}"
@@ -28,21 +26,30 @@ def getProductInfo(query):
         soup = BeautifulSoup(response.text, 'html.parser')
         product_count = 0
         products = soup.find("div", attrs={"class": "s-main-slot s-result-list s-search-results sg-row"})
-
-        for product in products.find_all("data-component-type", attrs={"s-search-result"}):
+        #save in products.html file 
+        # with open("products.html", "w") as file:
+        #     file.write(str(products))
+        seen_urls = set()
+        product_info_list = []
+        for product in products.select("div.puis-card-container.s-card-container.s-overflow-hidden.aok-relative.puis-include-content-margin"):
+            
             price = product.find("span", attrs={"class": "a-price-whole"}).get_text(strip=True) if product.find("span", attrs={"class": "a-price-whole"}) else "N/A"
-            if price == "N/A":
-                continue
-            product_link = product.find("a", attrs={"class": "a-link-normal a-text-normal"}).get('href') if product.find("a", attrs={"class": "a-link-normal a-text-normal"}) else "N/A"
-            if product_link == "N/A":
+            price = price.replace(",", "") if price != "N/A" else "N/A"
+            price = price.replace(".", "")  if price != "N/A" else "N/A"
+            price = int(price) if price.isdigit() else "N/A"
+
+
+            #get all links of the product with class = "a-link-normal s-no-outline" where href exists
+            product_link = product.find("a", class_="a-link-normal s-no-outline", href=True)['href'] if product.find("a", class_="a-link-normal s-no-outline", href=True) else "N/A"
+            if(product_link == "N/A"):
                 continue
             product_link = BASE_URL + product_link if not product_link.startswith("https://www.amazon.in") else product_link
             if product_link in seen_urls:
                 continue
             seen_urls.add(product_link)
-            product_count += 1
-            if product_count == 15:
-                break
+            with open("product_links.txt", "a") as file:
+                file.write(product_link + "\n")
+                
             rating_count_text = product.find("span", attrs={"class": "a-size-base"}).get_text(strip=True) if product.find("span", attrs={"class": "a-size-base"}) else "N/A"
             rating_count = ''.join(filter(str.isdigit, rating_count_text)) if rating_count_text != "N/A" else "N/A"
             rating_count = int(rating_count) if rating_count.isdigit() else 0
@@ -60,53 +67,11 @@ def getProductInfo(query):
                 "product_url": product_link,
                 "logo": "https://www.amazon.com/favicon.ico"
             }
-            return product_info
+            product_info_list.append(product_info)
+            product_count += 1
+            if product_count == 15:
+                break
+        return product_info_list
     except Exception as e:
         print(f"Error fetching product links: {e}")
         return []
-
-def extract_product_info(product_url):
-    try:
-        response = requests.get(product_url, headers=BASE_HEADERS)
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, 'html.parser')
-
-        # item_id = soup.find("div", attrs={"id": "desktop_accordion"}).get('data-csa-c-asin') if soup.find("div", attrs={"id": "desktop_accordion"}) else "N/A"
-        # if item_id in seen_ids:
-        #     return None
-        # if(item_id!="N/A"):
-        #     seen_ids.add(item_id)
-
-        rating_count_text = soup.find("span", attrs={"id": "acrCustomerReviewText"}).text if soup.find("span", attrs={"id": "acrCustomerReviewText"}) else "N/A"
-        rating_count = ''.join(filter(str.isdigit, rating_count_text)) if rating_count_text != "N/A" else "N/A"
-        rating_count = int(rating_count) if rating_count.isdigit() else 0
-
-        avg_rating_text = soup.find("span", attrs={"id": "acrPopover"})["title"] if soup.find("span", attrs={"id": "acrPopover"}) else "N/A"
-        avg_rating = avg_rating_text.split(" ")[0] if avg_rating_text != "N/A" else "N/A"
-        avg_rating = float(avg_rating) if avg_rating.replace(".", "").isdigit() else 0
-
-        price = soup.select_one('span.a-price-whole').get_text(strip=True) if soup.select_one('span.a-price-whole') else "N/A"
-        #change price to int 
-        if price == "N/A":
-            return None
-        
-        price = price.replace(",", "")
-        price = price.replace(".", "")
-        price = int(price) if price.isdigit() else "N/A"
-        
-        product_info = {
-            "price": price,
-            "rating_count": rating_count,
-            # "item_id": item_id,
-            "avg_rating": avg_rating,
-            "product_name": soup.find("span", attrs={"id": "productTitle"}).get_text(strip=True) if soup.find("span", attrs={"id": "productTitle"}) else "N/A",
-            "image_url": soup.find("img", attrs={"id": "landingImage"}).get('src') if soup.find("img", attrs={"id": "landingImage"}) else "N/A",
-            "product_url": soup.find("link", attrs={"rel": "canonical"}).get('href') if soup.find("link", attrs={"rel": "canonical"}) else "N/A",
-            "logo": "https://www.amazon.com/favicon.ico"
-        }
-
-        return product_info
-
-    except Exception as e:
-        print(f"Error extracting product info: {e}")
-        return None
