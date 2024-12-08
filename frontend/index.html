@@ -16,19 +16,18 @@
                 <input type="text" id="search-query" placeholder="Enter product name">
             </div>
             <button id="search-button">Search</button>
-            <div id="sort-container">
-                <!-- <label for="sort-options">Sort by:</label> -->
-                <select id="sort-options">
-                    <!-- <option value="relevance">Relevance</option> -->
-                    <option value="price">Price</option>
-                    <option value="rating_count">Rating Count</option>
-                    <option value="avg_rating">Average Rating</option>
-                    <!-- <option value="product_name">Product Name</option> -->
-                </select>
-            </div>
         </div>
         <div id="loading-indicator" class="loading" style="display: none;">Searching...</div>
-        
+        <div id="sort-container" style="display: none;">
+            <!-- <label for="sort-options">Sort by:</label> -->
+            <select id="sort-options">
+                <!-- <option value="relevance">Relevance</option> -->
+                <option value="price">Price</option>
+                <option value="rating_count">Rating Count</option>
+                <option value="avg_rating">Average Rating</option>
+                <!-- <option value="product_name">Product Name</option> -->
+            </select>
+        </div>
         <div id="product-list"></div>
         <div id="github-logo">
             <a href="https://github.com">

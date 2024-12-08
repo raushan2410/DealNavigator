@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img class="site-logo" src="${product.logo}" alt="site logo">
                 </div>
             `;
+            getElementById("sort-container").style.display = "block";
             productList.appendChild(productDiv);
         });
     }

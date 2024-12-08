@@ -14,7 +14,7 @@ CORS(app, resources={r"/*": {"origins": "*"}},
      methods=["GET", "POST", "OPTIONS"], 
      allow_headers=["Origin", "Content-Type", "Accept"])
 
-OUTPUT_FILE = "../frontend/product_info.jsonl"
+OUTPUT_FILE = "/app/frontend/product_info.jsonl"
 
 @app.route('/')
 def serve_index():

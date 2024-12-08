@@ -10,6 +10,9 @@ COPY backend/requirements.txt .
 # Install the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Create the necessary directories
+RUN mkdir -p /app/frontend
+
 # Copy the rest of the application code into the container
 COPY backend/ /app/backend/
 COPY frontend/ /app/frontend/

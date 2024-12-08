@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
@@ -8,7 +8,9 @@ body {
     justify-content: center;
     min-height: 100vh;
     width: 100vw;
-    background-image: linear-gradient(to right top, #834267, #794771, #6e4b78, #61507d, #54547f, #455780, #37597e, #2a5b7a, #1a5c73, #125c6a, #165b60, #205a56);
+    background-color: #f5f5f5;
+    color: #333;
+    overflow-x: hidden;
 }
 
 h1 {
@@ -24,52 +26,43 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.container {
-    width: 40%;
-    min-width: 600px;
-    position: relative;
-    /* top: 20px; */
-    /* padding: 20px; */
-    margin: 15px;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-    /* border-radius: 15%; */
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-.container div {
     padding: 20px;
 }
 
-#search-container {
-    width: 50%;
+.container {
+    width: 90%;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: large;
+    margin-bottom: 20px;
+}
+
+#search-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 #search-query {
-    width: calc(100% - 22px);
+    flex: 1;
     padding: 10px;
-    height: 25px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: large;
+    font-size: 16px;
+    margin-right: 10px;
 }
 
 #search-button {
-    width: 100px;
-    height: 45px;
+    padding: 10px 20px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.3s;
 }
 
 #search-button:hover {
@@ -77,118 +70,163 @@ h1 {
 }
 
 #sort-container {
-    width: 100px;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: large;
+    justify-content: center;
+    padding: 10px;
+    position: relative;
+    left: 80%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+
 }
 
 #sort-options {
-    width: 100%;
-    height: 45px;
-    /* padding: 10px; */
-    /* margin-bottom: 20px; */
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    text-align: center;
-    font-size: medium;
+    font-size: 16px;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+#sort-options:hover {
+    border-color: #007bff;
 }
 
 #product-list {
     width: 90%;
-    /* max-width: 600px; */
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    gap: 20px;
 }
 
 .product {
+    background-color: white;
     border: 1px solid #ccc;
-    padding: 10px;
-    margin: 10px;
-    display: flex;
-    align-items: center;
-    border-radius: 4px;
-    background-color: #fff;
-    width: 25%;
-    min-width: 300px;
-    /* max-height: 400px; */
-}
-
-.product-image {
-    width: 30%;
-    margin-right: 20px;
-    border-radius: 4px;
-    max-height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.product-image img {
-    max-width: 80%;
-    max-height: 80%;
-    border-radius: 4px;
-}
-
-.product-details {
-    flex: 1;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: calc(25% - 20px);
+    box-sizing: border-box;
+    transition: transform 0.3s, box-shadow 0.3s;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-.product-details h2 {
-    font-size: 18px
+
+.product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-.product-details img.site-logo {
-    /* position: absolute;
-    bottom: 10px;
-    right: 10px; */
-    max-width: 40px;
-    border-radius: 4px;
+
+.product-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
     position: relative;
-    left: 80%;
+    min-height: 190px;
+}
+
+.product-image img {
+    height: 90%;
+    border-radius: 8px;
+    image-rendering: optimizeQuality;
+}
+
+.site-logo {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: white;
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-details {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.product-details h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.product-details p {
+    margin: 5px 0;
+}
+
+.product-details a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.product-details a:hover {
+    background-color: #0056b3;
 }
 
 .loading {
     text-align: center;
     font-size: 1.5em;
-    color: #ffffff;
+    color: #333;
     position: absolute;
-    top: 45%;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #github-logo {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    max-width: 70px;
-    border-radius: 4px;
+    max-width: 50px;
+    transition: transform 0.3s;
 }
+
 #github-logo:hover {
-    opacity: 0.8;
+    transform: scale(1.1);
 }
+
 #github-logo img {
     max-width: 100%;
 }
 
-@media (max-width: 600px) {
-    .container {
-        flex-direction: column;
-        min-width: 80%;
+@media (max-width: 768px) {
+    .product {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .product {
+        width: calc(100% - 20px);
     }
     #search-container {
-        width: 80%;
+        flex-direction: column;
     }
-    #product-list {
-        width: 80%;
+    #search-query {
+        margin-right: 0;
+        margin-bottom: 10px;
     }
-    #github-logo {
-        display: none;
+    #sort-container {
+        justify-content: center;
     }
-
 }

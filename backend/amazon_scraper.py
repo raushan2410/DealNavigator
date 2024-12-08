@@ -58,7 +58,7 @@ def getProductInfo(query):
 
             product_name = product.find("span", attrs={"class": "a-text-normal"}).get_text(strip=True) if product.find("span", attrs={"class": "a-text-normal"}) else "N/A",
             # trim product name to first 15 words
-            product_name = " ".join(product_name[0].split()[:15])
+            product_name = " ".join(product_name[0].split()[:10])
 
             product_info = {
                "price": price,
