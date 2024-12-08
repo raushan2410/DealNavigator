@@ -77,15 +77,13 @@ def extract_product_info(product_url):
             if item["@type"] == "Product":
                 product_name = item["name"] if "name" in item else "N/A"
                 product_name = " ".join(product_name.split()[:10]) # trim product name to first 15 words
-                image_url = item["image"]
-                if image_url.startswith("http://"):
-                    image_url = "https://" + image_url[7:]
+                image_url = item["image"] if "image" in item else "N/A"
                 product_info = {
                     "price": item["offers"]["price"] if "offers" in item else "N/A",
                     "rating_count": item["aggregateRating"]["reviewCount"] if "aggregateRating" in item else 0,
                     "avg_rating": item["aggregateRating"]["ratingValue"] if "aggregateRating" in item else 0,
                     "product_name": product_name,
-                    "image_url": item["image"] if "image" in item else "N/A",
+                    "image_url": image_url,
                     "brand_name": item["brand"]["name"] if "brand" in item else "N/A",
                     "product_url": product_url,
                     "logo": "https://rukminim1.flixcart.com/www/512/512/promos/11/07/2024/e8f26305-4b9f-444f-a970-b70dc51e04ef.png"

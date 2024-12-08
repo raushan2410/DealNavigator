@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img class="site-logo" src="${product.logo}" alt="site logo">
                 </div>
             `;
-            getElementById("sort-container").style.display = "block";
             productList.appendChild(productDiv);
         });
+        
     }
 
     function sortProducts(products, criteria) {
@@ -77,6 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 // console.log('Fetched text:', text); // Debugging line
                 const data = text.trim().split('\n').map(JSON.parse);
                 loadingIndicator.style.display = 'none';
+                
+                document.getElementById('sort-container').style.display = 'flex';
+
                 // sortDiv.style.display = 'block';
                 displayProducts(data);
                 sortProducts(data, sortOptions.value);

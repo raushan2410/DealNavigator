@@ -70,16 +70,15 @@ h1 {
 }
 
 #sort-container {
-    width: 100%;
     display: flex;
     justify-content: center;
-    padding: 10px;
     position: relative;
-    left: 80%;
+    left: 40%;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: white;
-
+    margin-bottom: 10px;
+    display: none;
 }
 
 #sort-options {
