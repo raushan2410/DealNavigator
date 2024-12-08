@@ -75,11 +75,13 @@ def extract_product_info(product_url):
         product_info = {}
         for item in data:
             if item["@type"] == "Product":
+                product_name = item["name"] if "name" in item else "N/A"
+                product_name = " ".join(product_name.split()[:15]) # trim product name to first 15 words
                 product_info = {
                     "price": item["offers"]["price"] if "offers" in item else "N/A",
                     "rating_count": item["aggregateRating"]["reviewCount"] if "aggregateRating" in item else 0,
                     "avg_rating": item["aggregateRating"]["ratingValue"] if "aggregateRating" in item else 0,
-                    "product_name": item["name"] if "name" in item else "N/A",
+                    "product_name": product_name,
                     "image_url": item["image"] if "image" in item else "N/A",
                     "brand_name": item["brand"]["name"] if "brand" in item else "N/A",
                     "product_url": product_url,

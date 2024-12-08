@@ -7,7 +7,9 @@ import os
 import json
 
 app = Flask(__name__, static_folder="../frontend", static_url_path="", template_folder="../frontend")
-CORS(app)  # Enable CORS for all routes
+
+CORS(app, resources={r"/*": {"origins": "*"}})
+
 OUTPUT_FILE = "../frontend/product_info.jsonl"
 
 @app.route('/')
