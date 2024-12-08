@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Fetching products for query:', query);
         productList.innerHTML = '';
         loadingIndicator.style.display = 'block';
-        fetch('http://127.0.0.1:5000/search', {
+        fetch('http://127.0.0.1:5002/search', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function pollForFile() {
         console.log('Polling for file...');
-        fetch('http://127.0.0.1:5000/product_info')
+        fetch('http://127.0.0.1:5002/product_info')
             .then(response => {
                 if (response.ok) {
                     return response.text();

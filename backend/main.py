@@ -8,7 +8,11 @@ import json
 
 app = Flask(__name__, static_folder="../frontend", static_url_path="", template_folder="../frontend")
 
-CORS(app, resources={r"/*": {"origins": "*"}})
+# Enable CORS for all routes and origins
+CORS(app, resources={r"/*": {"origins": "*"}}, 
+     supports_credentials=True, 
+     methods=["GET", "POST", "OPTIONS"], 
+     allow_headers=["Origin", "Content-Type", "Accept"])
 
 OUTPUT_FILE = "../frontend/product_info.jsonl"
 
