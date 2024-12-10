@@ -56,7 +56,7 @@ def getProductInfo(query):
             avg_rating = avg_rating_text.split(" ")[0] if avg_rating_text != "N/A" else "N/A"
             avg_rating = float(avg_rating) if avg_rating.replace(".", "").isdigit() else 0
 
-            product_name = product.find("span", attrs={"class": "a-text-normal"}).get_text(strip=True) if product.find("span", attrs={"class": "a-text-normal"}) else "N/A",
+            product_name = product.find("img", attrs={"class": "s-image"}).get('alt') if product.find("img", attrs={"class": "s-image"}) else "N/A"
             # trim product name to first 15 words
             product_name = " ".join(product_name[0].split()[:10])
 
