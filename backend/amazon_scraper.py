@@ -56,9 +56,13 @@ def getProductInfo(query):
             avg_rating = avg_rating_text.split(" ")[0] if avg_rating_text != "N/A" else "N/A"
             avg_rating = float(avg_rating) if avg_rating.replace(".", "").isdigit() else 0
 
-            product_name = product.find("img", attrs={"class": "s-image"}).get('alt') if product.find("img", attrs={"class": "s-image"}) else "N/A"
-            # trim product name to first 15 words
-            product_name = " ".join(product_name[0].split()[:10])
+            product_name = product.find("img", attrs={"class": "s-image"})['alt'] if product.find("img", attrs={"class": "s-image"}) else "N/A"
+            print(product_name)
+            # if product name starts with Sponsored then skip
+            if product_name.startswith("Sponsored"):
+                continue
+            # trim product name to first 10 words
+            product_name = " ".join(product_name.split()[:10])
 
             product_info = {
                "price": price,
