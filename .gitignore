@@ -1,0 +1,3 @@
+backend/__pycache__/
+backend/venv/
+frontend/product_info.jsonl
