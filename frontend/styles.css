@@ -134,6 +134,7 @@ h1 {
 
 .product-image img {
     height: 90%;
+    max-width: 70%;
     border-radius: 8px;
     image-rendering: optimizeQuality;
 }
