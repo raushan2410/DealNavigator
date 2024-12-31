@@ -26,7 +26,7 @@ DealNavigator is a web application that allows users to search for products on A
 1. Clone the repository:
 
     ```sh
-    git clone https://github.com/yourusername/DealNavigator.git
+    git clone https://github.com/raushan2410/DealNavigator.git
     cd DealNavigator
     ```
 
