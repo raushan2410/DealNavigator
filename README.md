@@ -1,6 +1,6 @@
 # DealNavigator
 
-![DealNavigator Logo](path/to/logo.png)
+![DealNavigator Logo](/frontend/image/iconmonstr-chart-3-240.png)
 
 DealNavigator is a web application that allows users to search for products on Amazon and Flipkart, and view detailed information about the products, including price, rating, and more. The application is built using Flask for the backend and vanilla JavaScript for the frontend.
 
@@ -13,14 +13,13 @@ DealNavigator is a web application that allows users to search for products on A
 
 ## Screenshots
 
-![DealNavigator Screenshot](path/to/screenshot.png)
+![DealNavigator Screenshot](/frontend/image/image.png)
 
 ## Getting Started
 
 ### Prerequisites
 
 - Docker
-- Docker Compose
 
 ### Installation
 
@@ -34,10 +33,11 @@ DealNavigator is a web application that allows users to search for products on A
 2. Build and run the Docker container:
 
     ```sh
-    docker-compose up --build
+    docker build -t <image-name> .
+    docker run --name dealNavigator -d -p 5002:5000 <image-name>
     ```
 
-3. Open your browser and navigate to `http://localhost:5000`.
+3. Open your browser and navigate to `http://localhost:5002`.
 
 ### Usage
 
@@ -47,14 +47,13 @@ DealNavigator is a web application that allows users to search for products on A
 
 ### Project Structure
 
-- [backend](http://_vscodecontentref_/2): Contains the backend code including the Flask app and scrapers.
-- [frontend](http://_vscodecontentref_/3): Contains the frontend code including HTML, CSS, and JavaScript.
-- [Dockerfile](http://_vscodecontentref_/4): Docker configuration for building the container.
-- `docker-compose.yml`: Docker Compose configuration for running the application.
+- [backend](/backend/): Contains the backend code including the Flask app and scrapers.
+- [frontend](/frontend/): Contains the frontend code including HTML, CSS, and JavaScript.
+- [Dockerfile](/Dockerfile): Docker configuration for building the container.
 
 ### API Endpoints
 
-- `POST /search`: Accepts a JSON payload with a [query](http://_vscodecontentref_/5) field and returns search results.
+- `POST /search`: Accepts a JSON payload with a query field and returns search results.
 - `GET /product_info`: Serves the product information file.
 
 ### Technologies Used
@@ -77,7 +76,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ### Contact
 
-For any inquiries, please contact [yourname@example.com](mailto:yourname@example.com).
+For any inquiries, please contact [singhraushan2410@gmail.com](mailto:singhraushan2410@gmail.com).
 
 ---
 
